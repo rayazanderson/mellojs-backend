@@ -39,18 +39,37 @@ function handleLogout() {
   });
 }
 
+function createCards(cards) {
+    let $cardUl = $('<ul>');
+  
+    let $cardLis = cards.map(function(card) {
+      let $cardLi = $('<li>');
+      let $cardButton = $('<button>').text(card.text);
+  
+      $cardLi.append($cardButton);
+  
+      return $cardLi;
+    });
+  
+    $cardUl.append($cardLis);
+  
+    return $cardUl;
+  }
+
 function createLists(lists) {
     let $listContainers = lists.map(function(list) {
-        let $listContainer = $('<div class="list">').data('id', list.id);
-        let $header = $('<header>');
-        let $headerButton = $('<button>').text(list.title);
-        let $addCardButton = $('<button>Add a card...</button>').on(
-          'click',
-          openCardCreateModal
-        );
+      let $listContainer = $('<div class="list">').data('id', list.id);
+      let $header = $('<header>');
+      let $headerButton = $('<button>').text(list.title);
+      let $cardUl = createCards(list.cards);
+      let $addCardButton = $('<button>Add a card...</button>').on(
+        'click',
+        openCardCreateModal
+      );
   
       $header.append($headerButton);
       $listContainer.append($header);
+      $listContainer.append($cardUl);
       $listContainer.append($addCardButton);
   
       return $listContainer;
